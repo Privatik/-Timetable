@@ -1,0 +1,20 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/black_late</item>
+        <item name="colorPrimaryDark">@color/black_late</item>
+        <item name="colorAccent">@color/black_late</item>
+    </style>
+
+    <style name="DialogAnimation">
+        <item name="android:windowEnterAnimation">@anim/anim_top</item>
+        <item name="android:windowExitAnimation">@anim/anim_bottom</item>
+    </style>
+
+    <style parent="TextAppearance.AppCompat.Widget.ActionBar.Title.Inverse" name="MyTabLayoutTextAppearance">
+        <item name="android:textSize">25sp</item>
+    </style>
+
+</resources>
