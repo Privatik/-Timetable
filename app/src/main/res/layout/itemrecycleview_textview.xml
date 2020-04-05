@@ -11,6 +11,7 @@
         android:textSize="15sp"
         android:gravity="center"
         android:padding="6dp"
+        android:textStyle="bold"
         android:textColor="@color/black_late"
         android:background="@drawable/textview_bottom"
         />

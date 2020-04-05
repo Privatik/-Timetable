@@ -1,13 +1,40 @@
 package com.io.fizmat.xlsreader.model;
 
+
+
+import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.ForeignKey;
+import androidx.room.Index;
+import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
+
+import com.io.fizmat.singoltonbase.savebaseroom.typeconvert.ConvertGroup;
+
+import org.jetbrains.annotations.NotNull;
+
+import java.io.Serializable;
 import java.util.List;
 
-public class Group {
+import static androidx.room.ForeignKey.CASCADE;
+
+@Entity
+public class Group implements Serializable {
+
+    @PrimaryKey
+    @NonNull
     private String nameGroup;
+
+    @TypeConverters({ConvertGroup.class})
     private List<Day> dayList;
 
-    public Group(String nameGroup)
+    @ColumnInfo(index = true)
+    private String curcTitle;
+
+    public Group(String nameGroup, String curcTitle)
     {
+        this.curcTitle = curcTitle;
         this.nameGroup = nameGroup;
     }
 
@@ -32,5 +59,13 @@ public class Group {
         Day day = dayList.get(dayNumber);
       //  System.out.println(nameGroup + " " + string);
         day.addTimetable(string);
+    }
+
+    public String getCurcTitle() {
+        return curcTitle;
+    }
+
+    public void setCurcTitle(String curcTitle) {
+        this.curcTitle = curcTitle;
     }
 }

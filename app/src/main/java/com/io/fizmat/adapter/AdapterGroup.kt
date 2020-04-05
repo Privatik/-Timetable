@@ -7,6 +7,7 @@ import android.widget.Button
 import androidx.recyclerview.widget.RecyclerView
 import com.io.fizmat.R
 import com.io.fizmat.navigation.Navigation
+import com.io.fizmat.util.UtilToast
 import com.io.fizmat.worktotime.DayOfWeek
 import com.io.fizmat.xlsreader.model.Day
 import com.io.fizmat.xlsreader.model.Group
@@ -25,7 +26,7 @@ class AdapterGroup(val listGroup: List<Group>) : RecyclerView.Adapter<AdapterGro
     class ItemRecycleView(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener
     {
         val buttom = itemView.findViewById<Button>(R.id.button)
-        lateinit var listDay: List<Day>
+        lateinit var group: Group
 
         init {
             buttom.setOnClickListener(this)
@@ -33,12 +34,12 @@ class AdapterGroup(val listGroup: List<Group>) : RecyclerView.Adapter<AdapterGro
 
         fun textButton(group: Group) {
          buttom.text = group.nameGroup
-            listDay = group.dayList
+            this.group = group
        }
 
         override fun onClick(v: View?) {
-            DayOfWeek.dayofWeek()
-            Navigation.showDialogTimeTable(listDay)
+                DayOfWeek.dayofWeek()
+                Navigation.showDialogTimeTable(group)
         }
     }
 }

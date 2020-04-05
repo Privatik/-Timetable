@@ -9,7 +9,7 @@ import com.io.fizmat.xlsreader.model.Group
 
 class FragmentGroup : FragmentMain() {
 
-    lateinit var listGroup: List<Group>
+    var listGroup: List<Group> = arrayListOf()
 
     override fun backImage(back: ImageButton)
     {
@@ -22,6 +22,8 @@ class FragmentGroup : FragmentMain() {
     }
 
     override fun daggerInit(arguments: Bundle?) {
-        listGroup = arguments!!.getSerializable("groups") as List<Group>
+        if (arguments != null) {
+            listGroup = arguments.getSerializable("groups") as List<Group>
+        }
     }
 }

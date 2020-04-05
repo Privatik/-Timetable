@@ -35,25 +35,25 @@ public class XLSReaderBRSU {
         return new XLSReaderBRSU(book);
     }
 
-    public List<Curs> readXLS()
-    {
+    public List<Curs> readXLS() throws IOException {
        List<Curs> list = new ArrayList<>();
        for (int i = 0; i < book.getNumberOfSheets(); i++) {
            list.add(readsheat(book.getSheetAt(i)));
        }
 
+       book.close();
        return list;
     }
 
 
-    public Curs readsheat(HSSFSheet sheet)
-    {
+    public Curs readsheat(HSSFSheet sheet) throws IOException {
         Curs curs = new Curs();
-        List<Group> groupList = createListGroup(sheet.getRow(3));
+        String nameSheet = sheet.getSheetName();
+        nameSheet = nameSheet.contains("КУРС")?nameSheet.toLowerCase():nameSheet;
+        List<Group> groupList = createListGroup(sheet.getRow(3),nameSheet);
         curs.setGroupList(groupList);
 
-        String nameSheet = sheet.getSheetName();
-        curs.setCursTitle(nameSheet.contains("КУРС")?nameSheet.toLowerCase():nameSheet);
+        curs.setCursTitle(nameSheet);
 
         HSSFCell cell;
         HSSFRow row;
@@ -91,6 +91,8 @@ public class XLSReaderBRSU {
                 }
             }
         }
+      //  curs.setOwerIdList();
+
         return curs;
     }
 
@@ -110,14 +112,14 @@ public class XLSReaderBRSU {
         return string;
     }
 
-    private List<Group> createListGroup(HSSFRow row)
+    private List<Group> createListGroup(HSSFRow row, String curcTitle)
     {
         List<Group> groupList = new ArrayList<>();
 
         for (int i = 1; i < row.getLastCellNum(); i++) {
             String title = row.getCell(i).getStringCellValue();
             if (title.contains("ФМ")) break;
-            Group group = new Group(title);
+            Group group = new Group(title,curcTitle);
           //  System.out.println(row.getCell(i).getStringCellValue());
             List<Day> dayList = new ArrayList<>();
             dayList.add(new Day());
@@ -128,10 +130,12 @@ public class XLSReaderBRSU {
             dayList.add(new Day());
             group.setDayList(dayList);
             groupList.add(group);
+            if (title.contains("Веб")) break;
         }
         int endPosition = groupList.size() - 1;
         if (groupList.get(endPosition).getNameGroup().contains("ФИ"))
             groupList.remove(endPosition);
+
 
         return groupList;
     }

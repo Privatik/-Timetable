@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
@@ -6,6 +6,8 @@
         <item name="colorPrimary">@color/black_late</item>
         <item name="colorPrimaryDark">@color/black_late</item>
         <item name="colorAccent">@color/black_late</item>
+        <item name="android:fontFamily">@font/font_comfortaa</item>
+        <item name="android:navigationBarColor" tools:targetApi="lollipop">@color/black_late</item>
     </style>
 
     <style name="DialogAnimation">
@@ -15,6 +17,20 @@
 
     <style parent="TextAppearance.AppCompat.Widget.ActionBar.Title.Inverse" name="MyTabLayoutTextAppearance">
         <item name="android:textSize">25sp</item>
+    </style>
+
+    <style parent="Theme.AppCompat.Dialog" name="FullScreenDialogStyle">
+        <item name="android:windowNoTitle">true</item>
+        <item name="colorPrimaryDark">@color/black_late</item>
+        <item name="colorPrimary">@color/black_late</item>
+        <item name="colorAccent">@color/black_late</item>
+        <item name="android:windowFullscreen">false</item>
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:navigationBarColor" tools:targetApi="lollipop">@color/gray</item>
+    </style>
+
+    <style parent="Theme.AppCompat.NoActionBar" name="SplashTheme">
+        <item name="android:background">@drawable/startfon</item>
     </style>
 
 </resources>

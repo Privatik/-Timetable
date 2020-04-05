@@ -1,10 +1,16 @@
 package com.io.fizmat.xlsreader.model;
 
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Day {
+
+public class Day implements Serializable {
+
     private List<String> timetable = new ArrayList<>();
+
+    public Day(){}
 
     public List<String> getTimetable() {
         return timetable;

@@ -10,7 +10,7 @@
         android:layout_height="match_parent"
         android:textAllCaps="false"
         android:textSize="40sp"
-        android:padding="10dp"
+        android:padding="8dp"
         android:gravity="center"
         android:background="@android:color/transparent"
         android:textColor="@color/gray"/>

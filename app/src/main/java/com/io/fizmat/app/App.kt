@@ -1,6 +1,7 @@
 package com.io.fizmat.app
 
 import android.app.Application
+import android.util.Log
 import com.io.fizmat.assynctask.GetListCurs
 import com.io.fizmat.singoltonbase.BaseCurses
 import com.io.fizmat.xlsreader.XLSReaderBRSU
@@ -11,7 +12,9 @@ class App : Application(){
 
     override fun onCreate() {
         super.onCreate()
-        BaseCurses.inization()
+        Log.d("ApplicationFlex","onCreate")
+        BaseCurses.inization(this)
+
     }
 
 }

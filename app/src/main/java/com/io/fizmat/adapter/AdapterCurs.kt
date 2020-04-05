@@ -1,6 +1,7 @@
 package com.io.fizmat.adapter
 
 import android.annotation.SuppressLint
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,6 +9,7 @@ import android.widget.Button
 import androidx.recyclerview.widget.RecyclerView
 import com.io.fizmat.R
 import com.io.fizmat.navigation.Navigation
+import com.io.fizmat.worktotime.CurrentOccupation
 import com.io.fizmat.xlsreader.model.Curs
 import com.io.fizmat.xlsreader.model.Group
 
@@ -41,6 +43,14 @@ class AdapterCurs(val list:List<Curs>) : RecyclerView.Adapter<AdapterCurs.ItemRe
        }
 
         override fun onClick(v: View?) {
+            Log.d("Curs","${buttom.text}")
+            if (buttom.text.equals(" маг 1-2 курс") && (CurrentOccupation.shirt == 1 || CurrentOccupation.shirt == 3))
+                CurrentOccupation.shirt = 2
+            else if (buttom.text.equals("ИнОб") && (CurrentOccupation.shirt == 2 || CurrentOccupation.shirt == 1))
+                CurrentOccupation.shirt = 3
+            else if (CurrentOccupation.shirt == 2 || CurrentOccupation.shirt == 3)
+                CurrentOccupation.shirt = 1
+
             Navigation.showFragmetnGroup(listGroup)
         }
     }
