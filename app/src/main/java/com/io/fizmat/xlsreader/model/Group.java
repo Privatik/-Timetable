@@ -22,8 +22,9 @@ import static androidx.room.ForeignKey.CASCADE;
 @Entity
 public class Group implements Serializable {
 
-    @PrimaryKey
-    @NonNull
+    @PrimaryKey(autoGenerate = true)
+    private Long id;
+
     private String nameGroup;
 
     @TypeConverters({ConvertGroup.class})
@@ -67,5 +68,13 @@ public class Group implements Serializable {
 
     public void setCurcTitle(String curcTitle) {
         this.curcTitle = curcTitle;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

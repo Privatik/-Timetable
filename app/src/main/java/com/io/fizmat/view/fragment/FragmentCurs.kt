@@ -6,26 +6,26 @@ import com.io.fizmat.adapter.AdapterCurs
 import com.io.fizmat.singoltonbase.BaseCurses
 import com.io.fizmat.util.UtilToast
 import com.io.fizmat.xlsreader.model.Curs
+import kotlinx.coroutines.*
 
 class FragmentCurs : FragmentMain() {
 
-    lateinit var listCurs : List<Curs>
-
-    override fun workRecycltView(recyclerView: RecyclerView?) {
-        recyclerView?.adapter = AdapterCurs(listCurs)
-        super.workRecycltView(recyclerView)
-    }
-
-    override fun daggerInit(arguments: Bundle?) {
-        if (!BaseCurses.isListLoaded)
-        {
-            while (true)
-            {
-                if (BaseCurses.isListLoaded)
-                    break
-            }
-            UtilToast.show("Офлайн версия")
+    override fun workRecycltView(recyclerView: RecyclerView?){
+        if (!BaseCurses.isLoad) {
+            UtilToast.show("Загрузка")
+            BaseCurses.isLoad = true
         }
-        listCurs = BaseCurses.listCurs
+            GlobalScope.launch {
+                val list = BaseCurses.listCurs.await()
+                withContext(Dispatchers.Main) {
+                    if (list.isEmpty()) {
+                        UtilToast.show("Ошибка загрузки")
+                    } else {
+                        super.workRecycltView(recyclerView)
+                        recyclerView?.adapter = AdapterCurs(list)
+                    }
+                }
+            }
     }
+
 }

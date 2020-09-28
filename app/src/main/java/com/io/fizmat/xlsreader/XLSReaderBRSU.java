@@ -118,7 +118,7 @@ public class XLSReaderBRSU {
 
         for (int i = 1; i < row.getLastCellNum(); i++) {
             String title = row.getCell(i).getStringCellValue();
-            if (title.contains("ФМ")) break;
+            if (title.contains("Веб") || title.contains("ФМ")) break;
             Group group = new Group(title,curcTitle);
           //  System.out.println(row.getCell(i).getStringCellValue());
             List<Day> dayList = new ArrayList<>();
@@ -130,7 +130,7 @@ public class XLSReaderBRSU {
             dayList.add(new Day());
             group.setDayList(dayList);
             groupList.add(group);
-            if (title.contains("Веб")) break;
+            if (title.equals("КФ-21") || title.equals("3 КУРС")) break;
         }
         int endPosition = groupList.size() - 1;
         if (groupList.get(endPosition).getNameGroup().contains("ФИ"))

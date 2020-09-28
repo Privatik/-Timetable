@@ -24,25 +24,21 @@ class SQLbase(val context: Context) {
         groupDao = base.groupDao()
     }
 
-    fun putBaseCurs()
-    {
-        GlobalScope.launch {
+    fun putBaseCurs() = runBlocking{
+        launch(Dispatchers.IO){
             val firstStart = FirstStart(context)
-            if (firstStart.getFirstStart())
-            {
+            if (firstStart.getFirstStart()) {
                 insertBase()
                 firstStart.setFirstStart()
-            }
-            else
-            {
+            } else {
                 updateBase()
             }
         }
     }
 
-    private fun insertBase()
+    private suspend fun insertBase()
     {
-        BaseCurses.listCurs.forEach{
+        BaseCurses.listCurs.await().forEach{
             Log.d("BaseReader",it.cursTitle)
             cursDao.insert(it)
             it.groupList.forEach { group ->
@@ -52,7 +48,7 @@ class SQLbase(val context: Context) {
         }
     }
 
-    private fun updateBase()
+    private suspend fun updateBase()
     {
         val listCurs = cursDao.listCurs as ArrayList<Curs>
 
@@ -70,18 +66,22 @@ class SQLbase(val context: Context) {
     }
 
 
-    fun getAllListCurs(): Job = GlobalScope.launch {
-        val listCurs = cursDao.listCurs as ArrayList<Curs>
+    fun getAllListCurs(): Deferred<List<Curs>> = GlobalScope.async {
+        try {
+            val listCurs = cursDao.listCurs as ArrayList<Curs>
 
-        listCurs.forEach {
-            Log.d("BaseReaderList", it.cursTitle)
-            it.groupList = groupDao.getListGroup(it.cursTitle)
-            it.groupList.forEach {group ->
-                Log.d("BaseReaderList", "${group.nameGroup} ${group.curcTitle}")
+            listCurs.forEach {
+                Log.d("BaseReaderList", it.cursTitle)
+                it.groupList = groupDao.getListGroup(it.cursTitle)
+                it.groupList.forEach { group ->
+                    Log.d("BaseReaderList", "${group.nameGroup} ${group.curcTitle}")
+                }
             }
+            return@async listCurs
+        }catch (e: Exception)
+        {
+            val list: List<Curs> = arrayListOf()
+            return@async list
         }
-
-        BaseCurses.listCurs = listCurs
-        BaseCurses.isListLoaded = true
     }
 }

@@ -15,25 +15,16 @@ import kotlin.coroutines.suspendCoroutine
 
 object BaseCurses {
 
-    lateinit var listCurs : List<Curs>
-    var isListLoaded = true
+    lateinit var listCurs : Deferred<List<Curs>>
+    var isLoad = false
 
-    fun inization(context: Context)
-    {
-        try {
-            val baseSQL = SQLbase(context)
-            if (isConnect(context)) {
-                val task = GetListCurs().execute()
-                listCurs = task.get()
-                baseSQL.putBaseCurs()
-            } else {
-                isListLoaded = false
-                listCurs = arrayListOf()
-                baseSQL.getAllListCurs()
-            }
-        }catch (e:Exception)
-        {
-            Log.d("BaseReader",e.message)
+    fun inization(context: Context) = runBlocking {
+        val baseSQL = SQLbase(context)
+        if (isConnect(context)) {
+            listCurs = GetListCurs().get()
+            baseSQL.putBaseCurs()
+        } else {
+            listCurs = baseSQL.getAllListCurs()
         }
     }
 
