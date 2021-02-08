@@ -35,7 +35,7 @@ class FragmentTimetable: DialogFragment(), View.OnClickListener {
 
             val view = inflater.inflate(R.layout.fragment_timetable, container, false)
             dialog?.window!!.attributes.windowAnimations = R.style.DialogAnimation
-        dialog?.window!!.setBackgroundDrawableResource(android.R.color.transparent)
+            dialog?.window!!.setBackgroundDrawableResource(android.R.color.transparent)
 
 
             val back = view.findViewById<ImageButton>(R.id.back)
